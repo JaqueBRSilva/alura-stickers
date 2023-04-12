@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
@@ -26,6 +27,9 @@ public class Main {
         var parser = new JsonParser();
         List<Map<String, String>> moviesList = parser.parse(body);
 
+        var directory = new File("output-imgs/");
+        directory.mkdir();
+
         // EXIBIR E MANIPULAR OS DADOS
         var generate = new StickersGenerate();
 
@@ -35,7 +39,7 @@ public class Main {
             String movieName = movie.get("title");
 
             InputStream inputStream = new URL(urlImage).openStream();
-            String fileName = movieName + ".png";
+            String fileName = "output-imgs/" + movieName + ".png";
 
             generate.create(inputStream, fileName);
 
