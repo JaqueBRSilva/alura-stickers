@@ -1,5 +1,8 @@
 import javax.imageio.ImageIO;
 import java.awt.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.TextLayout;
+import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.InputStream;
@@ -23,7 +26,7 @@ public class StickersGenerate {
 
         // CONFIGURAR A FONTE
         var fontName = new Font("Impact", Font.PLAIN, 84);
-        graphics.setColor(Color.ORANGE);
+        graphics.setColor(Color.YELLOW);
         graphics.setFont(fontName);
 
         // ESCREVER UMA FRASE NA NOVA IMAGEM
@@ -32,7 +35,22 @@ public class StickersGenerate {
         var rectangle = fontMetrics.getStringBounds(text, graphics);
         int textWidth = (int) rectangle.getWidth();
         int textPositionX = (widthValue - textWidth) / 2;
-        graphics.drawString(text, textPositionX, newHeight - 100);
+        int textPositionY = newHeight - 100;
+        graphics.drawString(text, textPositionX, textPositionY);
+
+        // CONTORNO DA FONTE
+        FontRenderContext fontRenderContext = graphics.getFontRenderContext();
+        var textLayout = new TextLayout(text, fontName, fontRenderContext);
+        Shape outlinedText = textLayout.getOutline(null);
+        AffineTransform transform = graphics.getTransform();
+        transform.translate(textPositionX, textPositionY);
+        graphics.setTransform(transform);
+
+        var outlineStroke = new BasicStroke(widthValue * 0.004f);
+        graphics.setStroke(outlineStroke);
+
+        graphics.setColor(Color.BLACK);
+        graphics.draw(outlinedText);
 
         // ESCREVER A NOVA IMAGEM EM UM ARQUIVO
         ImageIO.write(newImage, "png", new File(fileName));
