@@ -27,7 +27,12 @@ public class StickersGenerate {
         graphics.setFont(fonte);
 
         // ESCREVER UMA FRASE NA NOVA IMAGEM
-        graphics.drawString("TOPZERA", widthValue - 250, newHeight - 100);
+        String text = "TOPZERA";
+        var fontMetrics = graphics.getFontMetrics();
+        var rectangle = fontMetrics.getStringBounds(text, graphics);
+        int textWidth = (int) rectangle.getWidth();
+        int textPositionX = (widthValue - textWidth) / 2;
+        graphics.drawString(text, textPositionX, newHeight - 100);
 
         // ESCREVER A NOVA IMAGEM EM UM ARQUIVO
         ImageIO.write(newImage, "png", new File(fileName));
