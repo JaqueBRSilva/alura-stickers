@@ -22,9 +22,9 @@ public class StickersGenerate {
         graphics.drawImage(originalImage, 0, 0, null);
 
         // CONFIGURAR A FONTE
-        var fonte = new Font(Font.SANS_SERIF, Font.BOLD, 64);
+        var fontName = new Font("Impact", Font.PLAIN, 84);
         graphics.setColor(Color.ORANGE);
-        graphics.setFont(fonte);
+        graphics.setFont(fontName);
 
         // ESCREVER UMA FRASE NA NOVA IMAGEM
         String text = "TOPZERA";
