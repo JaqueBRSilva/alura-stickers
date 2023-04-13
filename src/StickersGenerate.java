@@ -9,7 +9,7 @@ import java.io.InputStream;
 
 public class StickersGenerate {
 
-    public void create(InputStream inputStream, String fileName) throws Exception {
+    public void create(InputStream inputStream, String fileName, String ratingMediaText, InputStream inputStreamOverlapImage) throws Exception {
 
         // LEITURA DA IMAGEM
         BufferedImage originalImage = ImageIO.read(inputStream);
@@ -24,23 +24,26 @@ public class StickersGenerate {
         Graphics2D graphics = (Graphics2D) newImage.getGraphics();
         graphics.drawImage(originalImage, 0, 0, null);
 
+        BufferedImage overlapImage = ImageIO.read(inputStreamOverlapImage);
+        int overlapImagePositionY = newHeight - overlapImage.getHeight();
+        graphics.drawImage(overlapImage, 0, overlapImagePositionY, null);
+
         // CONFIGURAR A FONTE
         var fontName = new Font("Impact", Font.PLAIN, 84);
         graphics.setColor(Color.YELLOW);
         graphics.setFont(fontName);
 
         // ESCREVER UMA FRASE NA NOVA IMAGEM
-        String text = "TOPZERA";
         var fontMetrics = graphics.getFontMetrics();
-        var rectangle = fontMetrics.getStringBounds(text, graphics);
+        var rectangle = fontMetrics.getStringBounds(ratingMediaText, graphics);
         int textWidth = (int) rectangle.getWidth();
         int textPositionX = (widthValue - textWidth) / 2;
         int textPositionY = newHeight - 100;
-        graphics.drawString(text, textPositionX, textPositionY);
+        graphics.drawString(ratingMediaText, textPositionX, textPositionY);
 
         // CONTORNO DA FONTE
         FontRenderContext fontRenderContext = graphics.getFontRenderContext();
-        var textLayout = new TextLayout(text, fontName, fontRenderContext);
+        var textLayout = new TextLayout(ratingMediaText, fontName, fontRenderContext);
         Shape outlinedText = textLayout.getOutline(null);
         AffineTransform transform = graphics.getTransform();
         transform.translate(textPositionX, textPositionY);

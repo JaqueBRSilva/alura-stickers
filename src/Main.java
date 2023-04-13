@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URL;
@@ -36,17 +37,27 @@ public class Main {
         for (Map<String, String> movie : moviesList) {
 
             String urlImage = movie.get("image");
+            String urlBiggerImage = urlImage.replaceFirst("(@?\\.)([0-9A-Z, ]+).jpg$","$1.jpg");
             String movieName = movie.get("title");
+            double ratingMovie = Double.parseDouble(movie.get("imDbRating"));
 
-            InputStream inputStream = new URL(urlImage).openStream();
+            String stickerText;
+            InputStream approvesMovie;
+
+            if (ratingMovie >= 8.0) {
+                stickerText = "T O P Z E R A";
+                approvesMovie = new FileInputStream(new File("overlap-icons/thumbs-up.png"));
+            } else {
+                stickerText = "PREFIRO NÃO COMENTAR...";
+                approvesMovie = new FileInputStream(new File("overlap-icons/thumbs-down.png"));
+            }
+
+            InputStream inputStream = new URL(urlBiggerImage).openStream();
             String fileName = "output-imgs/" + movieName + ".png";
 
-            generate.create(inputStream, fileName);
+            generate.create(inputStream, fileName, stickerText, approvesMovie);
 
             System.out.println("\u001b[1mTÍTULO :\u001b[m " + movieName);
-            System.out.println("\u001b[1mPÔSTER :\u001b[m " + movie.get("image"));
-
-            double ratingMovie = Double.parseDouble(movie.get("imDbRating"));
             System.out.print(ratingMovie + " ");
 
             int starsNumber = (int) ratingMovie;
