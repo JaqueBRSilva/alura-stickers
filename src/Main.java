@@ -33,12 +33,12 @@ public class Main {
             String stickerText = "TOPZERA";
             InputStream approvesMovie = new FileInputStream(new File("overlap-icons/thumbs-up.png"));
 
-            InputStream inputStream = new URL(content.getUrlImage()).openStream();
-            String fileName = "output-imgs/" + content.getTitle() + ".png";
+            InputStream inputStream = new URL(content.urlImage()).openStream();
+            String fileName = "output-imgs/" + content.title() + ".png";
 
             generate.create(inputStream, fileName, stickerText, approvesMovie);
 
-            System.out.println("\u001b[1mGERANDO :\u001b[m " + content.getTitle());
+            System.out.println("\u001b[1mGERANDO :\u001b[m " + content.title());
             System.out.println("\n");
         }
     }
