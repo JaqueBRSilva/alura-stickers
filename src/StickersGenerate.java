@@ -29,7 +29,7 @@ public class StickersGenerate {
         graphics.drawImage(overlapImage, 0, overlapImagePositionY, null);
 
         // CONFIGURAR A FONTE
-        var fontName = new Font("Impact", Font.PLAIN, 84);
+        var fontName = new Font("Impact", Font.PLAIN, 86);
         graphics.setColor(Color.YELLOW);
         graphics.setFont(fontName);
 
