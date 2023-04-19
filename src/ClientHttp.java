@@ -17,7 +17,8 @@ public class ClientHttp {
             return body;
 
         } catch (IOException | InterruptedException ex) {
-            throw new RuntimeException(ex);
+//            throw new RuntimeException(ex);
+            throw new ClientHttpException("ERRO AO CONSULTAR URL");
         }
     }
 }
