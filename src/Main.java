@@ -8,12 +8,12 @@ public class Main {
 
     public static void main(String[] args) throws Exception {
 
-        // FAZER UMA CONEXÃO HTTP E BUSCAR OS TOP 250 FILMES
-        String url = "https://raw.githubusercontent.com/alura-cursos/imersao-java-2-api/main/TopMovies.json";
-        IMDBContentExtractor extractor = new IMDBContentExtractor();
+        API api = API.IMDB_TOP_MOVIES;
+//        API api = API.NASA;
 
-//        String url = "https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY&start_date=2022-12-12&end_date=2022-12-14";
-//        NasaContentExtractor extractor = new NasaContentExtractor();
+        String url = api.getUrl();
+
+        ContentExtractor extractor = api.getExtractor();
 
         var http = new ClientHttp();
         String jsonBody = http.searchDatas(url);
